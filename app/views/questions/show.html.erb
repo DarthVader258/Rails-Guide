@@ -1,0 +1,12 @@
+<h1>Question's Summary</h1>
+<div class="col-lg-6">
+	<h3 class="mb-3">Questions</h3>
+		<p class="lead">Title:   <%= @question.title %></p>
+		<p class="lead">Answer:  <%= @question.answer %></p>
+		<p class="lead">Keyword: <%= @question.keyword %></p>
+	<%= link_to "Edit", edit_question_path(@question), class:"btn btn-success" %>
+	<%= link_to "Delete", question_path(@question), class:"btn btn-warning", method: :delete, data: { confirm: "Are you sure"} %><br>
+	<%= link_to "Back", questions_path, class:"btn btn-primary" %>
+	<%= link_to "Delete", question_path(@question), class: "btn btn-danger", data: { turbo_method: :delete, turbo_confirm: "Are you sure"} %>
+</div>
+

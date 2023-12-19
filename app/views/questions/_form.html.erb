@@ -1,0 +1,24 @@
+<%= form_with model: question do |form| %>
+	<div class="row">
+		<div class="form-group">
+			<%= form.label :title, style: "display:block" %>
+			<%= form.text_field :title, class: "form-control form-control-lg"%>
+		</div>
+		<div class="form-group">
+			<%= form.label :keyword, style: "display:block" %>
+			<%= form.text_field :keyword, class: "form-control form-control-lg"%>
+		</div>
+		<div class="form-group">
+			<%= form.label :answer, style: "display:block" %>
+			<%= form.rich_text_area :answer, class: "form-control form-control-lg"%>
+		</div>
+		<div class="form-group">
+			<%= form.label :is_premium, style: "display:block", class: "mt-2" %>
+			<%= form.check_box :is_premium, class: "form-check-input mt-2"%>
+		</div>
+		<div class="form-group">
+			<%= form.submit class: "btn btn-success mt-3" %>
+			<%= link_to "Back", questions_path, class: "btn btn-outline-primary mt-3" %>
+		</div>
+	</div>
+<% end %>

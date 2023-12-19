@@ -1,0 +1,12 @@
+<h1>Plan Details</h1>
+<div class="col-lg-6">
+	<h3 class="mb-3">Plans</h3>
+	<p class="lead">Name: <%= @plan.name%></p>
+	<p class="lead">Price: <%= @plan.price%></p>
+	<p class="lead">User_id: <%= @plan.user_id%></p>
+
+	<%= link_to "Edit", edit_plan_path(@plan), class: "btn btn-success btn-lg" %>
+	<%= link_to "Back", plans_path, class: "btn btn-primary btn-lg" %>
+	<%= link_to "Delete", plan_path(@plan), class: "btn btn-warning btn-lg", method: :delete, data: { confirm: "Are you Sure"} %>
+	<%= link_to "Delete", plan_path(@plan), class: "btn btn-danger btn-lg", data: {turbo_method: :delete, turbo_confirm: "Are you sure"} %>
+</div>
