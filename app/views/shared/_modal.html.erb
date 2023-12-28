@@ -14,16 +14,27 @@ Show Answer
       <div class="modal-body">
           <p class="lead">Answer: <%= question.answer%></p>
           <h5><span class="badge rounded-pill text-bg-primary"><%= question.keyword%></span></h5>
-          <div class="btn-group mt-3" role="group", aria-label="Like&Dislike">
-            <%= link_to "Like", toggle_like_question_path(question), method: :post, class: "btn btn-success" %>
-            <%= link_to "Dislike", toggle_dislike_question_path(question), method: :post, class: "btn btn-danger" %>
-          </div>
-          <!-- <p class="lead">Keyword: <%#= question.keyword%></p> -->
+          <p class="lead">Like:<%=  question.likes.count %></p>
+          <% like = current_user.likes.find_by(question: question) %>
+          <% if like.nil? %>
+            <%= button_to "Like", likes_path, params: { like: { question_id: question.id}}, method: :post, class: "btn btn-success btn-lg" %>
+            <!--<form action="/likes" method= "post">
+              <input type="hidden" name= "authenticity_token" value="<%#= form_authenticity_token%>">
+              <input type="hidden" name="like[question_id]" value="<%#= question.id%>">
+              <input type="submit" value="Like">
+            </form>-->
+          <% else %>
+            <%= button_to "Unlike", like_path(like), method: :delete, class: "btn btn-danger btn-lg" %>
+            <%# <p class="lead">Unlike</p> %>
+            <!--<form action="<%#= like_path(like) %>" method="post">
+              <input type="hidden" name="authenticity_token" value="<%#= form_authenticity_token%>">
+              <input type="hidden" name="_method" value="DELETE">
+              <input type="submit" value="Unlike">
+            </form>-->
+          <% end %>
       </div>
       <div class="modal-footer">
         <%= link_to "Back", questions_path, class: "btn btn-outline-primary"%>
-        <%# <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button> %>
       </div>
     </div>
   </div>

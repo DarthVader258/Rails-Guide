@@ -75,3 +75,4 @@ gem "devise"
 gem "cssbundling-rails"
 gem 'kaminari'
 gem "ransack"
+gem "faker"

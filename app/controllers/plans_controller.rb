@@ -38,29 +38,22 @@ class PlansController < ApplicationController
 		end
 	end
 
-	def activate
-		# @plan.activate!
-		# redirect_to plans_path, notice: "Plan acitvated successfully"
-		Plan.transaction do
-			# Deactivate other plans
-			Plan.where.not(id: @plan.id).update_all(active: false)
+	def activate_plan_for_user
+    user = current_user
+    plan = Plan.find(params[:id])
 
-			# Activate the current plan
-			@plan.update(active: true)
-		end
+    UserPlan.transaction do
+      # Deactivate other plans for the user
+      user.user_plans.destroy_all
 
-		flash[:notice] = "#{@plan.name} Plan activates successfully"
-		redirect_to plans_path
-	end
+      # Create a new UserPlan for the selected plan
+      user.user_plans.create(plan: plan, expiry_date: Date.today + 30.days)
+    end
 
-	def deactivate
-		# @plan.deactivate!
-		# redirect_to plans_path, notice: "Plan deactivate successfully"
-		@plan.update(active: false)
-		flash[:notice] = "#{@plan.name} Plan deactivates successfully"
-		redirect_to plans_path
-	end
-
+    flash[:notice] = "#{plan.name} Plan activated successfully"
+    redirect_to plans_path
+  end
+	
 	private
 	def set_params
 		@plan = Plan.find(params[:id])

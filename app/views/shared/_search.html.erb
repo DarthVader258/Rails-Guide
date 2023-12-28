@@ -1,11 +1,15 @@
-<% if @q %>
+<% if @q.present? %>
 	<%= search_form_for @q, url: :questions do |form| %>
 		<div class="form-group">
 			<%#= form.label %>
 			<%= form.text_field :keyword_cont, class:"form-control" %>
 		</div>
-		<div class="form-group">
-			<%= form.submit class: "btn btn-success"%>
-		</div>
+		<% unless @q.keyword_cont.blank? %>
+			<div class="form-group">
+				<%= form.submit class: "btn btn-success"%>
+			</div>
+		<% end %>
 	<% end %>
+<%# else %>
+		<%# <p class="lead text-center ">No Record Found</p> %>
 <% end %>	

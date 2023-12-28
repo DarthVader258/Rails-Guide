@@ -39,24 +39,14 @@ class QuestionsController < ApplicationController
 		end
 	end
 
-	def toggle_like
-		@question.toggle_like
-		redirect_to questions_path(@question), notice: "#{@question.keyword} has been liked"
-	end
-
-	def toggle_dislike
-		@question.toggle_dislike
-		redirect_to questions_path(@question), notice: "#{@question.keyword} has been disliked"
-	end
-
 	private
 	def set_params
 		@question = Question.find(params[:id])
 	rescue ActiveRecord::RecordNotFound => error
-			redirect_to questions_path, notice: error
+			redirect_to questions_path, alert: error
 	end
 
 	def question_params
-		params.require(:question).permit(:title, :keyword, :is_premium, :answer, :likes, :dislikes)
+		params.require(:question).permit(:title, :keyword, :is_premium, :answer)
 	end
 end

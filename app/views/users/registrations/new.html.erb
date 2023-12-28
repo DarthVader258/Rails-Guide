@@ -15,7 +15,7 @@
 
         <div class="field">
           <%= f.label :contact_number, class: "mb-2 mt-2" %>
-          <%= f.text_field :contact_number, value: current_user.contact_number, class: "form-control form-control-lg" %>
+          <%= f.text_field :contact_number, class: "form-control form-control-lg" %>
           <% @user.errors.full_messages_for(:contact_number).each do |message| %>
             <div class="text-danger"><%= message%></div>
           <% end %>

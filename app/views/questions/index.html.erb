@@ -19,22 +19,28 @@
 <%# end %>
 
 <div class="row row-cols- row-cols-md-1 ">
-	<% @questions.each do |question|%>
-	  <div class="col">
-	    <div class="card mt-3">
-	      <div class="card-body">
-	        <%# <h5 class="card-title">Questions</h5> %>
-	        <p class="card-text">
-	        	<p class="lead">ID: <%= question.id%></p>
-	        	<p class="lead">Title: <%= question.title%></p>
-	        	<!--<p class="lead">Answer: <%#= question.answer%></p>
-	        	<p class="lead">Keyword: <%#= question.keyword%></p>-->
-	        </p>
-	        <%= render "shared/modal", question: question, class: "btn btn-outline-primary" %>
-	        <%#= link_to "Show More", question_path(question), class: "btn btn-info" %>
-	      </div>
-	    </div>
-	    <% end %>
-	  </div>
+	<% if @questions.present? %>
+		<% @questions.each do |question|%>
+		  <div class="col">
+		    <div class="card mt-3">
+		      <div class="card-body">
+		        <%# <h5 class="card-title">Questions</h5> %>
+		        <p class="card-text">
+		        	<p class="lead">ID: <%= question.id%></p>
+		        	<p class="lead">Title: <%= question.title%></p>
+		        	<!--<p class="lead">Answer: <%#= question.answer%></p>
+		        	<p class="lead">Keyword: <%#= question.keyword%></p>-->
+		        </p>
+		        <%#@questions.each do |question|%>
+		        <%# end %>
+		        <%= render "shared/modal", question: question, class: "btn btn-outline-primary" %>
+		        <%#= link_to "Show More", question_path(question), class: "btn btn-info" %>
+		      </div>
+		    </div>
+		  </div>
+		<% end %>
+	<% else %>
+			<p class="h3 text-center text-danger mt-3">No Record Found</p>
+	<% end %>	
   <%= paginate @questions%>
 </div>

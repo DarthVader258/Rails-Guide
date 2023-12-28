@@ -19,13 +19,7 @@
 		      <h5 class="card-title">Plans</h5>
 		      	<p class="lead">Name: <%= plan.name %></p>
 		      	<p class="lead">Price: <%= plan.price %></p>
-		      	<!--<p class="lead">User_id: <%#= plan.user_id %></p>-->
-		      	<% if plan.activated? %>
-		      		<%= link_to "Activated Plan", deactivate_plan_path(plan), method: :put, class: "btn btn-success btn-lg" %>
-		      	<% else %>
-		      		<%= link_to "Get Plan", activate_plan_path(plan), method: :put, class: "btn btn-primary btn-lg" %>
-		      	<% end %>
-		      	<%#= link_to "Get Plan", plan_path(plan), class: "btn btn-success" %>
+		      	<p class="lead"><%= link_to(plan.active? ? "Activated Plan" : "Get Plan", activate_plan_for_user_plan_path(plan), method: :post, class: "btn btn-primary") %></p>
 		    </div>
 		  </div>
 		</div>

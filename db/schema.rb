@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_19_095356) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_28_103907) do
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -49,6 +49,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_19_095356) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "question_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id"], name: "index_likes_on_question_id"
+    t.index ["user_id", "question_id"], name: "index_likes_on_user_id_and_question_id", unique: true
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
   create_table "plans", force: :cascade do |t|
     t.string "name"
     t.string "price"
@@ -66,8 +76,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_19_095356) do
     t.text "answer"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "likes", default: 0
-    t.integer "dislikes", default: 0
+  end
+
+  create_table "user_plans", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "plan_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.date "expiry_date"
+    t.index ["plan_id"], name: "index_user_plans_on_plan_id"
+    t.index ["user_id"], name: "index_user_plans_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -95,5 +113,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_19_095356) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "likes", "questions"
+  add_foreign_key "likes", "users"
   add_foreign_key "plans", "users"
+  add_foreign_key "user_plans", "plans"
+  add_foreign_key "user_plans", "users"
 end

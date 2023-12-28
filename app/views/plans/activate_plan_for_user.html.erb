@@ -1,0 +1,4 @@
+<%= form_with(model: @user_plan, url: activate_plan_for_user_path(@plan), method: :post) do |form| %>
+	<%= form.hidden_field :plan_id, value: @plan.id%>
+	<%= form.submit "Activated Plan" %>
+<% end %>

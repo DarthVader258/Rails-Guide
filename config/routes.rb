@@ -7,19 +7,24 @@ Rails.application.routes.draw do
   }
   root 'home#index'
 
-  resources :questions do
-    member do
-      get "toggle_like"
-      get "toggle_dislike"
-    end
-  end
+  resources :questions 
 
   resources :plans do
-    member do
-      get :activate
-      get :deactivate
-    end
+    post 'activate_plan_for_user', on: :member
   end
+
+  # resources :plans do
+    # post "activates_plan_for_user", on: :member
+    # member do
+      # match 'activate_plan_for_user', via: [:post, :put], as: :activate_plan_for_user
+      # put 'activate_plan_for_user'
+      # put :deactivate
+      # get :activate
+      # get :deactivate
+    # end
+  # end
+
+  resources :likes, only: [:create, :destroy]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
