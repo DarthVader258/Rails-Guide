@@ -1,8 +1,9 @@
 class PlansController < ApplicationController
-	before_action :set_params, only: [:show, :edit, :update, :destroy, :activate, :deactivate]
+	before_action :set_params, only: [:show, :edit, :update, :destroy]
 
 	def index
 		@plans = Plan.all
+		# @plan = current_user.plans
 	end
 
 	def show
@@ -41,13 +42,14 @@ class PlansController < ApplicationController
 	def activate_plan_for_user
     user = current_user
     plan = Plan.find(params[:id])
+    expiry_date = (plan.expiry_date - Date.today).to_i
 
     UserPlan.transaction do
       # Deactivate other plans for the user
       user.user_plans.destroy_all
 
       # Create a new UserPlan for the selected plan
-      user.user_plans.create(plan: plan, expiry_date: Date.today + 30.days)
+      user.user_plans.create(plan: plan, expiry_date: Date.today + expiry_date)
     end
 
     flash[:notice] = "#{plan.name} Plan activated successfully"
@@ -62,7 +64,7 @@ class PlansController < ApplicationController
 	end
 
 	def plan_params
-		params.require(:plan).permit(:name, :price, :user_id)
+		params.require(:plan).permit(:name, :price)
 	end
 
 end

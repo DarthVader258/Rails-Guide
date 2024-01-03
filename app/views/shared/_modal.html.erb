@@ -12,19 +12,23 @@ Show Answer
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-          <p class="lead">Answer: <%= question.answer%></p>
-          <h5><span class="badge rounded-pill text-bg-primary"><%= question.keyword%></span></h5>
-          <p class="lead">Like:<%=  question.likes.count %></p>
+          <p class="lead ">Answer: <%= question.answer%></p>
+          <h5 class="mb-3"><span class="badge rounded-pill text-bg-primary"><%= question.keyword%></span></h5>
+          <!--<p class="lead">Like:<%#=  question.likes.count %></p>-->
           <% like = current_user.likes.find_by(question: question) %>
           <% if like.nil? %>
-            <%= button_to "Like", likes_path, params: { like: { question_id: question.id}}, method: :post, class: "btn btn-success btn-lg" %>
+            <%= button_to likes_path, params: { like: { question_id: question.id}}, method: :post, class: "btn btn-success btn-lg" do %>
+              <i class="fa-solid fa-thumbs-up fa-xl"></i>
+            <% end %>
             <!--<form action="/likes" method= "post">
               <input type="hidden" name= "authenticity_token" value="<%#= form_authenticity_token%>">
               <input type="hidden" name="like[question_id]" value="<%#= question.id%>">
               <input type="submit" value="Like">
             </form>-->
           <% else %>
-            <%= button_to "Unlike", like_path(like), method: :delete, class: "btn btn-danger btn-lg" %>
+            <%= button_to like_path(like), method: :delete, class: "btn btn-danger btn-lg" do %>
+              <i class="fa-solid fa-thumbs-down fa-xl"></i>
+            <% end %>
             <%# <p class="lead">Unlike</p> %>
             <!--<form action="<%#= like_path(like) %>" method="post">
               <input type="hidden" name="authenticity_token" value="<%#= form_authenticity_token%>">
@@ -32,6 +36,7 @@ Show Answer
               <input type="submit" value="Unlike">
             </form>-->
           <% end %>
+          <span class="position-relative top-0  translate-middle badge rounded-pill bg-danger"><%= question.likes.count%></span>
       </div>
       <div class="modal-footer">
         <%= link_to "Back", questions_path, class: "btn btn-outline-primary"%>

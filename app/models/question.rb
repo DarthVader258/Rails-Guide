@@ -1,5 +1,6 @@
 class Question < ApplicationRecord
 	has_many :likes
+	has_many :users, through: :likes
 	has_rich_text :content
 	paginates_per 5
 	# max_paginates_per 100

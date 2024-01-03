@@ -3,14 +3,23 @@
 		<div class="form-group">
 			<%= form.label :title, style: "display:block" %>
 			<%= form.text_field :title, class: "form-control form-control-lg"%>
+			<% @question.errors.full_messages_for(:title).each do |message|%>
+				<div class="text-danger"><%= message%></div>
+			<% end %>
 		</div>
 		<div class="form-group">
 			<%= form.label :keyword, style: "display:block" %>
 			<%= form.text_field :keyword, class: "form-control form-control-lg"%>
+			<% @question.errors.full_messages_for(:keyword).each do |message|%>
+				<div class="text-danger"><%= message%></div>
+			<% end %>
 		</div>
 		<div class="form-group">
 			<%= form.label :answer, style: "display:block" %>
 			<%= form.rich_text_area :answer, class: "form-control form-control-lg"%>
+			<% @question.errors.full_messages_for(:answer).each do |message|%>
+				<div class="text-danger"><%= message%></div>
+			<% end %>
 		</div>
 		
 		<div class="form-group">

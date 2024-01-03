@@ -10,16 +10,29 @@
 	<p class="lead">User_id: <%#= plan.user_id %></p>
 <%# end %>-->
 
-
+<% plan_ids = current_user.user_plans.pluck(:plan_id).uniq %>
 <div class="row row-cols-1 row-cols-md-2 g-4">
 	<% @plans.each do |plan| %>
 		<div class="col">
-		  <div class="card">
-		    <div class="card-body">
+		  <div class="card border-primary">
+		    <div class="card-body text-primary">
 		      <h5 class="card-title">Plans</h5>
 		      	<p class="lead">Name: <%= plan.name %></p>
 		      	<p class="lead">Price: <%= plan.price %></p>
-		      	<p class="lead"><%= link_to(plan.active? ? "Activated Plan" : "Get Plan", activate_plan_for_user_plan_path(plan), method: :post, class: "btn btn-primary") %></p>
+		      	<% user_plan = current_user.user_plans.find_by(plan_id: plan.id) %>
+		      	<% if user_plan.present? %>
+			      	<div class="card text-bg-success mb-3" style="max-width: 38rem;">
+	  	          <div class="card-body">
+	  	            <h5 class="card-title"><%= plan.name %> has been Activated Successfully</h5>
+	  	            <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
+	  	          </div>
+	  	        </div>
+			      	<p class="lead">Date of Begin: <%= Date.today %></p>
+			      	<p class="lead">Date of Expiry: <%= plan.expiry_date %></p>
+			      	<p class="lead">Expiring in days: <%= user_plan.expiration_date %> days</p>
+			      <% else %>
+			      	<p class="lead"><%= link_to 'Get Plan', activate_plan_for_user_plan_path(plan), method: :post, class: "btn btn-primary" %></p>
+	  	      <% end %>
 		    </div>
 		  </div>
 		</div>

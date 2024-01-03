@@ -8,8 +8,8 @@ class User < ApplicationRecord
   # validates_uniqueness_of :contact_number
   # validates_length_of :contact_number, :minimum => 10, :maximum => 10
 
-  has_many :plans
   has_many :likes
+  has_many :questions, through: :likes
   has_many :user_plans
   has_many :plans, through: :user_plans
   # When creating has_many association model name must be plural
